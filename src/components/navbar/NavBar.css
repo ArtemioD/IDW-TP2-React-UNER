@@ -1,0 +1,35 @@
+.header-container{
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    align-items: center; 
+    justify-content: space-around; 
+    padding: 10px;
+}
+
+.logo {
+    margin-left: 5rem;
+    margin-right: 10rem;
+    width: 45px;
+    height: auto;
+}
+
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-menu {
+    display: inline-block;
+    padding: 0px 20px;
+    color: #575555;
+    margin-left: 1rem;
+    text-decoration: none;
+    line-height: 40px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.btn-menu:hover {
+    background-color: #88f0ae;
+    color: rgb(230, 230, 230);
+}
