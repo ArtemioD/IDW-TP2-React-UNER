@@ -8,7 +8,6 @@
 
 .logo {
     margin-left: 5rem;
-    margin-right: 10rem;
     width: 45px;
     height: auto;
 }
@@ -22,7 +21,7 @@
     display: inline-block;
     padding: 0px 20px;
     color: #575555;
-    margin-left: 1rem;
+    margin-left: 25px;
     text-decoration: none;
     line-height: 40px;
     border-radius: 20px;
