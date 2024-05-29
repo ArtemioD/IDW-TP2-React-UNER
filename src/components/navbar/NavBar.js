@@ -6,7 +6,8 @@ import Search from "../search/Search"
 const links = [
     { name: "Home", href: "/", style: "btn-menu" },
     { name: "About", href: "/about", style: "btn-menu" },
-    { name: "Contacto", href: "/contacto", style: "btn-menu" }
+    { name: "Contacto", href: "/contacto", style: "btn-menu" },
+    { name: "Agregar Propiedad", href: "/addpropiedad", style: "btn-menu" }
 ]
 
 const NavBar = () => {
@@ -17,7 +18,7 @@ const NavBar = () => {
         <div className="header-container">
             <Link to="/"><img src={logo} className="logo" /></Link>
 
-            <div style={{width: isHomePage ? '25rem' : '25rem'}}>
+            <div style={{width: '20%'}}>
                 {isHomePage && <Search />}
             </div>
 
