@@ -1,0 +1,46 @@
+.containers{
+    min-height: 80vh;
+    padding: 1rem;
+    padding-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: space-between;
+}
+.cards{
+    height: 65vh;
+    width: 50vh;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0.2rem;
+}
+.imgCard{
+    height: 40vh;
+    width: 100%;
+    /* object-fit: cover; */
+    -webkit-box-shadow: 10px 10px 50px -9px rgba(0,0,0,0.47);
+    -moz-box-shadow: 10px 10px 50px -9px rgba(0,0,0,0.47);
+    box-shadow: 10px 10px 50px -9px rgba(0,0,0,0.47);
+}
+.borderImg{
+    border-radius: 20px;
+    height: 40vh
+}
+.textCard{
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+.h3Card{
+    font-size: 20px;
+}
+.p1Card{
+    font-size: 16px;
+    font-style: italic;
+}
+.p2Card{
+font-weight: 600;
+}

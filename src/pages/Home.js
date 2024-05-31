@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom"
 import Header from "../components/Header"
+import Cards from "../components/cards/Cards"
 
 
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <Cards/>
         </div>
         
     )
