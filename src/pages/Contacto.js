@@ -1,8 +1,8 @@
-import Header from "../components/Header"
+
 
 const Contacto = () => {
     return (
-        <div>
+        <div style={ { minHeight:'90vh'}}>
             <h1>Contaco</h1>
             <h1>Contaco</h1>
             <h1>Contaco</h1>
