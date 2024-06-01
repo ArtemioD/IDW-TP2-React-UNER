@@ -32,3 +32,8 @@
     background-color: #88f0ae;
     color: rgb(230, 230, 230);
 }
+
+.btn-menu-admin:hover {
+    background-color: #4e04d6;
+    color: rgb(230, 230, 230);
+}

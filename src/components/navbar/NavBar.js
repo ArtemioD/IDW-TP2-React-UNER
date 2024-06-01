@@ -7,7 +7,7 @@ const links = [
     { name: "Home", href: "/", style: "btn-menu" },
     { name: "About", href: "/about", style: "btn-menu" },
     { name: "Contacto", href: "/contacto", style: "btn-menu" },
-    { name: "Agregar Propiedad", href: "/addpropiedad", style: "btn-menu" }
+    { name: "Admin", href: "/addpropiedad", style: "btn-menu btn-menu-admin" }
 ]
 
 const NavBar = () => {
