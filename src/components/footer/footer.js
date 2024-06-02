@@ -12,13 +12,12 @@ const Footer = () => {
         </div>
 
         <nav className="links_footer">
-            <Link to="/home">Home</Link>
+            <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            <Link to="/services">Contacto</Link>
+            <Link to="/contacto">Contacto</Link>
+            <Link to="/addpropiedad">Admin</Link>
         </nav>
       </div>
-
-      
 
       <div className="copyright">
         <p>
