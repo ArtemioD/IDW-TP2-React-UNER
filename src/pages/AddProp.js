@@ -4,11 +4,43 @@ import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamie
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
+    const [id, setId] = useState("")
     const [alojamientos, setAlojamientos] = useState([])
 
     useEffect(() => {
         getTiposAlojamiento();
     }, []);
+
+
+    const editar = async (e) => {
+        e.preventDefault()
+        const jsonDatos = {
+            Descripcion: descripcion
+        }
+        console.log(jsonDatos);
+        try {
+            const response = await fetch(`http://localhost:3001/tiposAlojamiento/putTipoAlojamiento/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(jsonDatos)
+            })
+            console.log(response)
+
+            if (response.ok) {
+                alert("editaste ok")
+                getTiposAlojamiento()
+            } else {
+                console.error("ERROR: al editar alojamiento")
+            }
+
+        } catch (error) {
+            console.log("ERROR: ", error)
+        }
+        e.target.reset()
+    }
+
 
     const submit = async (e) => {
         e.preventDefault()
@@ -97,7 +129,26 @@ const AddProp = () => {
                         <li key={aloj.idTipoAlojamiento}>
                             {aloj.idTipoAlojamiento} -
                             {aloj.Descripcion}
-                            <button >Editar</button>
+                            <form onSubmit={editar}>
+                                <label htmlFor='id'></label>
+                                <input
+                                name='id'
+                                type='hiden'
+                                id='id'
+                                placeholder="Ingrese el numero de alojamiento"
+                                onChange={(e)=>setId(e.target.value)}
+                                ></input>
+                                <label htmlFor='Descripcion'></label>
+                                <input
+                                name='Descripcion'
+                                type='text'
+                                id='Descripcion'
+                                placeholder="Ingrese el nuevo alojamiento"
+                                onChange={(e)=>setDescripcion(e.target.value)}
+                                >
+                                </input>
+                            <button type='submit'>Editar</button>
+                            </form>
                             <button onClick={() => deleteTipoAlojamiento(aloj.idTipoAlojamiento)}>Eliminar</button>
                         </li>
                     ))}
