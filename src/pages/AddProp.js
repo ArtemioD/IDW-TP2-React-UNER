@@ -4,7 +4,7 @@ import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamie
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
-    const [id, setId] = useState("")
+    // const [id, setId] = useState("")
     const [alojamientos, setAlojamientos] = useState([])
 
     useEffect(() => {
@@ -12,14 +12,14 @@ const AddProp = () => {
     }, []);
 
 
-    const editar = async (e) => {
+    const editar = async (e,idTipoAlojamiento) => {
         e.preventDefault()
         const jsonDatos = {
             Descripcion: descripcion
         }
         console.log(jsonDatos);
         try {
-            const response = await fetch(`http://localhost:3001/tiposAlojamiento/putTipoAlojamiento/${id}`, {
+            const response = await fetch(`http://localhost:3001/tiposAlojamiento/putTipoAlojamiento/${idTipoAlojamiento}`, {
                 method: 'PUT',
                 headers: {
                     'Content-type': 'application/json',
@@ -129,15 +129,7 @@ const AddProp = () => {
                         <li key={aloj.idTipoAlojamiento}>
                             {aloj.idTipoAlojamiento} -
                             {aloj.Descripcion}
-                            <form onSubmit={editar}>
-                                <label htmlFor='id'></label>
-                                <input
-                                name='id'
-                                type='hiden'
-                                id='id'
-                                placeholder="Ingrese el numero de alojamiento"
-                                onChange={(e)=>setId(e.target.value)}
-                                ></input>
+                            <form onSubmit={(e)=> editar(e, aloj.idTipoAlojamiento)}>
                                 <label htmlFor='Descripcion'></label>
                                 <input
                                 name='Descripcion'
