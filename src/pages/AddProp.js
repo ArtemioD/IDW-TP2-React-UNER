@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamiento'
+import "../pages/AddProp.css";
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
@@ -103,7 +104,7 @@ const AddProp = () => {
             console.log(response)
 
             if (response.ok) {
-                alert("eleminaste ok")
+                alert("eliminaste ok")
                 getTiposAlojamiento()
             } else {
                 console.error("ERROR: al eliminar alojamiento")
@@ -116,36 +117,52 @@ const AddProp = () => {
 
 
     return (
-        <div>
-            <AddTipoAlojamiento
-                submit={submit}
-                descripcion={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-            />
+        <div className='containerAdmin '>
+            <h1 className='AddPropTitulo'>Administracion de alojamientos</h1>
+            <div className='AddPropBox'>
+                <AddTipoAlojamiento
+                    submit={submit}
+                    descripcion={descripcion}
+                    onChange={(e) => setDescripcion(e.target.value)}
+                    />
+                <div className='tabla'>
 
-            <div >
-                <ul>
+                <table className="table">
+                    <thead >
+                        <tr>
+                            <th scope="col" className="border-0 text-center">Id</th>
+                            <th scope="col" className="border-0 text-center"> Tipo de alojamiento</th> 
+                            <th scope="col" className="border-0 text-center">Editar Alojamiento</th>
+                            <th scope="col" className="border-0 text-center">Eliminar Alojamiento</th>
+                        </tr>
+                    </thead>
                     {alojamientos.map((aloj) => (
-                        <li key={aloj.idTipoAlojamiento}>
-                            {aloj.idTipoAlojamiento} -
-                            {aloj.Descripcion}
-                            <form onSubmit={(e)=> editar(e, aloj.idTipoAlojamiento)}>
-                                <label htmlFor='Descripcion'></label>
-                                <input
-                                name='Descripcion'
-                                type='text'
-                                id='Descripcion'
-                                placeholder="Ingrese el nuevo alojamiento"
-                                onChange={(e)=>setDescripcion(e.target.value)}
-                                >
-                                </input>
-                            <button type='submit'>Editar</button>
-                            </form>
-                            <button onClick={() => deleteTipoAlojamiento(aloj.idTipoAlojamiento)}>Eliminar</button>
-                        </li>
-                    ))}
-                </ul>
-
+                        <>  
+                            <tbody key={aloj.idTipoAlojamiento} >
+                                <tr className='AddTipoAdd2'>
+                                    <th scope="row" className="border-0">{aloj.idTipoAlojamiento}</th>
+                                    <td className="border-0 ">{aloj.Descripcion}</td>
+                                    <td className="border-0">
+                                    <form onSubmit={(e)=> editar(e, aloj.idTipoAlojamiento)} className='AddTipoAdd'>
+                                        <label htmlFor='Descripcion'></label>
+                                        <input
+                                        name='Descripcion'
+                                        type='text'
+                                        id='Descripcion'
+                                        placeholder="Ingrese el nuevo alojamiento"
+                                        onChange={(e)=>setDescripcion(e.target.value)} className='AddTipoInput2'
+                                        >
+                                        </input>
+                                        <button type='submit'className="btn-secondary AddTipoBtn">Editar</button>
+                                    </form>
+                                    </td>
+                                    <td className="border-0"><button onClick={() => deleteTipoAlojamiento(aloj.idTipoAlojamiento)} className="btn-secondary AddTipoBtn">Eliminar</button></td>
+                                </tr>
+                            </tbody>
+                        </>
+                        ))}
+                </table>
+                </div>
             </div>
         </div>
     )
