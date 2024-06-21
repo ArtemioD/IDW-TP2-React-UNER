@@ -5,7 +5,7 @@ import "../pages/AddProp.css";
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
-    // const [id, setId] = useState("")
+    const [descripcionAdd, setDescripcionAdd] = useState("")
     const [alojamientos, setAlojamientos] = useState([])
 
     useEffect(() => {
@@ -46,9 +46,9 @@ const AddProp = () => {
     const submit = async (e) => {
         e.preventDefault()
         const jsonDatos = {
-            Descripcion: descripcion
+            Descripcion: descripcionAdd
         }
-        setDescripcion("")
+        setDescripcionAdd("")
 
         try {
             const response = await fetch("http://localhost:3001/tiposAlojamiento/createTipoAlojamiento", {
@@ -122,8 +122,8 @@ const AddProp = () => {
             <div className='AddPropBox'>
                 <AddTipoAlojamiento
                     submit={submit}
-                    descripcion={descripcion}
-                    onChange={(e) => setDescripcion(e.target.value)}
+                    descripcion={descripcionAdd}
+                    onChange={(e) => setDescripcionAdd(e.target.value)}
                     />
                 <div className='tabla'>
 
