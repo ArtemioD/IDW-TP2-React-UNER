@@ -1,0 +1,13 @@
+.containerAdmin{
+    min-height:  72vh ;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+.AdminAloj-form{
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+}
