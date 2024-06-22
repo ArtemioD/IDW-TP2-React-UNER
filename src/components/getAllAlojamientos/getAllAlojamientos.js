@@ -1,13 +1,13 @@
-import React from 'react'
-import "../pages/AdminAloj.css";
 import { useState, useEffect } from 'react'
-import GetAllAlojamientos from '../components/getAllAlojamientos/getAllAlojamientos';
 
-const AdminAloj = () => {
 
-    const [idEdiTAlojamiento, setIdEdiTAlojamiento] = useState('');
+const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
+
+    const [selectedAlojamiento, setSelectedAlojamiento] = useState('');
     const [alojamientos, setAlojamientos] = useState([])
-    const [formData, setFormData] = useState({
+    const [tipoAlojamientos, setTipoAlojamientos] = useState([])
+    const [alojamiento, setAlojamiento] = useState({ idAlojamiento: '' });
+    const [alojamientoEditar, setAlojamientoEditar] = useState({
         Titulo: '',
         Descripcion: '',
         TipoAlojamiento: '',
@@ -20,15 +20,31 @@ const AdminAloj = () => {
         Estado: ''
     });
 
-    const getIdEdiTAlojamiento = (value) => {
-        setIdEdiTAlojamiento(value);
-        console.log(value) // id elegido para editar
-    };
+    useEffect(() => {
+        getAlojamientos();
+    }, []);
 
     useEffect(() => {
+        console.log(alojamientoEditar);
+    }, [alojamientoEditar]);
+
+    const handleChange = (event) => {
+        setAlojamiento({ ...alojamiento, [event.target.name]: event.target.value });
+        setSelectedAlojamiento(event.target.value);
+    };
+
+    const handleDelete = () => {
+        deleteAlojamiento(alojamiento.idAlojamiento);
+    };
+
+    const handleEdit = () => {
+        const num = Number(alojamiento.idAlojamiento);
+        let al = alojamientos.find(aloj => aloj.idAlojamiento === num)
+        setAlojamientoEditar({ ...al })
         getTiposAlojamiento();
-    }, []);
-    // console.log(alojamientos);
+        //getIdEdiTAlojamiento(alojamiento.idAlojamiento);
+        //editar(alojamiento.idAlojamiento)
+    };
 
     const getTiposAlojamiento = async () => {
         try {
@@ -40,7 +56,7 @@ const AdminAloj = () => {
             })
             if (response.ok) {
                 const data = await response.json()
-                setAlojamientos(data)
+                setTipoAlojamientos(data)
             } else {
                 console.error("ERROR: al obteber alojamientos", response.body)
             }
@@ -49,94 +65,111 @@ const AdminAloj = () => {
         }
     }
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    const submit = async (e) => {
-        e.preventDefault();
-        const jsonDatos = {
-            Titulo: formData.Titulo,
-            Descripcion: formData.Descripcion,
-            TipoAlojamiento: formData.TipoAlojamiento,
-            Latitud: formData.Latitud,
-            Longitud: formData.Longitud,
-            PrecioPorDia: formData.PrecioPorDia,
-            CantidadDormitorios: formData.CantidadDormitorios,
-            CantidadBanios: formData.CantidadBanios,
-            Estado: formData.Estado
-        };
-
+    const getAlojamientos = async () => {
         try {
-            const response = await fetch("http://localhost:3001/alojamiento/createAlojamiento", {
-                method: 'POST',
+            const response = await fetch("http://localhost:3001/alojamiento/getAlojamientos", {
+                method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(jsonDatos)
-            });
+                    'Content-type': 'application/json',
+                }
+            })
 
             if (response.ok) {
-                alert("OK: Se creó alojamiento nuevo!");
-                // Reset form or update state if needed
-                setFormData({
-                    Titulo: '',
-                    Descripcion: '',
-                    TipoAlojamiento: '',
-                    Latitud: '',
-                    Longitud: '',
-                    PrecioPorDia: '',
-                    CantidadDormitorios: '',
-                    CantidadBanios: '',
-                    Estado: ''
-                });
-                // Assuming getTiposAlojamiento is a function you want to call
-                //getTiposAlojamiento();
+                const data = await response.json()
+                setAlojamientos(data)
             } else {
-                const errorData = await response.json();
-                console.error("ERROR: al crear alojamiento", errorData);
-                alert("Error: Pruebe mañana");
+                console.error("ERROR: al obteber alojamientos", response.body)
             }
+
         } catch (error) {
-            console.log("ERROR: ", error);
+            console.log("ERROR: ", error)
         }
-    };
+    }
+
+    const deleteAlojamiento = async (id) => {
+        //console.log(id)
+        try {
+            const response = await fetch(`http://localhost:3001/alojamiento/deleteAlojamiento/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            })
+            console.log(response)
+
+            if (response.ok) {
+                alert("eliminaste ok")
+                getAlojamientos()
+            } else {
+                console.error("ERROR: al eliminar alojamiento")
+            }
+
+        } catch (error) {
+            console.log("ERROR: ", error)
+        }
+    }
 
     return (
-        <div className='containerAdmin '>
-            {idEdiTAlojamiento}
+        <div>
+            <select
+                name="idAlojamiento"
+                id="idAlojamiento"
+                value={alojamiento.idAlojamiento}
+                onChange={handleChange}
+                required
+            >
+                <option value="" key="vacio">Seleccione una opción</option>
+                {alojamientos.map((aloj) => (
+                    <option value={aloj.idAlojamiento} key={aloj.idAlojamiento}>
+                        {aloj.Titulo}
+                    </option>
+                ))}
+            </select>
+
+            <button
+                type="button"
+                onClick={handleEdit}
+                className="btn-secondary AddTipoBtn"
+                disabled={!selectedAlojamiento}
+            >Eligir para editar</button>
+
+            <button
+                type="button"
+                onClick={handleDelete}
+                className="btn-secondary AddTipoBtn"
+                disabled={!selectedAlojamiento}
+            >Eliminar</button>
+
             <div>
-                <form className='AdminAloj-form' onSubmit={submit} >
+                <form className='AdminAloj-form'  >
                     <label htmlFor='Titulo'>Titulo</label>
                     <input
                         key="Titulo"
                         name="Titulo"
                         type="text"
-                        value={formData.Titulo}
-                        onChange={handleChange}
-                        placeholder='Nombre del alojamiento'
+                        onChange={ald => ald}
+                        value={alojamientoEditar.Titulo}
                         required />
+
                     <label htmlFor='Descripcion'>Descripcion</label>
                     <input
                         key="Descripcion"
                         id="Descripcion"
                         name="Descripcion"
                         type="text"
-                        value={formData.Descripcion}
-                        onChange={handleChange}
+                        value={alojamientoEditar.Descripcion}
+                        onChange={ald => ald}
                         placeholder='Descripcion'
                         required />
+
                     <p>Ubicacion:</p>
                     <label htmlFor='Latitud'>Latitud</label>
                     <input
                         key="Latitud"
                         id="Latitud"
                         name="Latitud"
-                        value={formData.Latitud}
-                        onChange={handleChange}
+                        value={alojamientoEditar.Latitud}
+                        onChange={ald => ald}
                         type="number"
                         placeholder='Latitud'
                         required />
@@ -145,8 +178,8 @@ const AdminAloj = () => {
                         key="Longitud"
                         id="Longitud"
                         name="Longitud"
-                        value={formData.Longitud}
-                        onChange={handleChange}
+                        value={alojamientoEditar.Longitud}
+                        onChange={ald => ald}
                         type="number"
                         placeholder='Longitud'
                         required />
@@ -156,8 +189,8 @@ const AdminAloj = () => {
                         id="PrecioPorDia"
                         name="PrecioPorDia"
                         type="number"
-                        value={formData.PrecioPorDia}
-                        onChange={handleChange}
+                        value={alojamientoEditar.PrecioPorDia}
+                        onChange={ald => ald}
                         placeholder='PrecioPorDia'
                         required />
                     <label htmlFor='CantidadDormitorios'>Cantidad de dormitorios</label>
@@ -166,8 +199,8 @@ const AdminAloj = () => {
                         id="CantidadDormitorios"
                         name="CantidadDormitorios"
                         type="number"
-                        value={formData.CantidadDormitorios}
-                        onChange={handleChange}
+                        value={alojamientoEditar.CantidadDormitorios}
+                        onChange={ald => ald}
                         placeholder='CantidadDormitorios'
                         required />
                     <label htmlFor='CantidadBanios'>Cantidad de baños</label>
@@ -176,10 +209,11 @@ const AdminAloj = () => {
                         id="CantidadBanios"
                         name="CantidadBanios"
                         type="number"
-                        value={formData.CantidadBanios}
-                        onChange={handleChange}
+                        value={alojamientoEditar.CantidadBanios}
+                        onChange={ald => ald}
                         placeholder='CantidadBanios'
                         required />
+
                     <fieldset>
                         <p>Estado:</p>
                         <label htmlFor='Disponible'>Disponible</label>
@@ -189,8 +223,8 @@ const AdminAloj = () => {
                             name="Estado"
                             type="radio"
                             value="Disponible"
-                            checked={formData.Estado === 'Disponible'}
-                            onChange={handleChange}
+                            checked={alojamientoEditar.Estado === 'Disponible'}
+                            onChange={ald => ald}
                             required />
                         <label htmlFor='Reservado'>Reservado</label>
                         <input
@@ -199,24 +233,29 @@ const AdminAloj = () => {
                             name="Estado"
                             type="radio"
                             value="Reservado"
-                            checked={formData.Estado === 'Reservado'}
-                            onChange={handleChange}
+                            checked={alojamientoEditar.Estado === 'Reservado'}
+                            onChange={ald => ald}
                             required />
                     </fieldset>
                     <p>Tipo de alojamiento</p>
-                    <select name="TipoAlojamiento" id="TipoAlojamiento" value={formData.TipoAlojamiento} onChange={handleChange} required>
+
+                    <select name="TipoAlojamiento" id="TipoAlojamiento" value={alojamientoEditar.TipoAlojamiento} onChange={ald => ald} required>
                         <option value="" key="vacio">Seleccione una opción</option>
-                        {alojamientos.map((aloj) => (
+                        {tipoAlojamientos.map((aloj) => (
                             <option value={aloj.idTipoAlojamiento} key={aloj.Descripcion} >{aloj.Descripcion}</option>))}
                     </select>
-                    <button type='submit'>Cargar nuevo</button>
+                    
+
+                    <button type='submit'>Editar</button>
                 </form>
             </div>
-
-            <GetAllAlojamientos getIdEdiTAlojamiento={getIdEdiTAlojamiento} alojamientos={alojamientos} />
         </div>
     )
+
 }
 
-export default AdminAloj
+export default GetAllAlojamientos
 
+/*
+falta hacer el boton de editar y cuando se crea nuevo alojaminto actualizar array de los ajojamintos
+ */
