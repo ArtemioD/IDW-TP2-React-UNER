@@ -1,0 +1,9 @@
+.imageCard{
+    width: 35rem
+}
+.containerImage{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem;
+    gap: 1rem;
+}
