@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamiento'
 import "../pages/AddProp.css";
+import Images from '../components/Images/Images';
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
@@ -164,6 +165,7 @@ const AddProp = () => {
                 </table>
                 </div>
             </div>
+            <Images />
         </div>
     )
 }

@@ -5,6 +5,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
+    padding-bottom: 1rem;
 }
 .AddPropTitulo{
     margin: 2rem;
