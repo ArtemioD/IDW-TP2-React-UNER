@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamiento'
 import "../pages/AddProp.css";
 import GetAllServicio from '../components/getAllServicios/GetAllServicios';
+import Images from '../components/Images/Images';
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
@@ -209,6 +210,7 @@ const AddProp = () => {
 
                 
             </div>
+            <Images />
         </div>
     )
 }
