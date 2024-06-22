@@ -2,10 +2,12 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamiento'
 import "../pages/AddProp.css";
+import GetAllServicio from '../components/getAllServicios/GetAllServicios';
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
     const [descripcionAdd, setDescripcionAdd] = useState("")
+    const [serviciosAdd, setServiciosAdd] = useState("")
     const [alojamientos, setAlojamientos] = useState([])
 
     useEffect(() => {
@@ -71,6 +73,35 @@ const AddProp = () => {
         }
     }
 
+    //cambiar el submit 
+    const submitServicios = async (e) => {
+        e.preventDefault()
+        const jsonDatos = {
+            Nombre: serviciosAdd
+        }
+        setServiciosAdd("")
+
+        try {
+            const response = await fetch("http://localhost:3001/servicio/createServicio", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(jsonDatos)
+            })
+
+            if (response.ok) {
+                alert("OK: Se Creo un nuevo servicio!", response)
+                getTiposAlojamiento()
+            } else {
+                console.error("ERROR: al crear servicio")
+                alert("Error: Pruebe mas tarde")
+            }
+        } catch (error) {
+            console.log("ERROR: ", error)
+        }
+    }
+
     const getTiposAlojamiento = async () => {
         try {
             const response = await fetch("http://localhost:3001/tiposAlojamiento/getTiposAlojamiento", {
@@ -121,10 +152,20 @@ const AddProp = () => {
             <h1 className='AddPropTitulo'>Administracion de alojamientos</h1>
             <div className='AddPropBox'>
                 <AddTipoAlojamiento
+                    placeholder={'Ingrese tipo alojamineto'}
                     submit={submit}
                     descripcion={descripcionAdd}
                     onChange={(e) => setDescripcionAdd(e.target.value)}
+                    labelName = {'Tipo de alojamiento'}
                     />
+
+                <AddTipoAlojamiento
+                    placeholder={'Ingrese servicios'}
+                    submit={submitServicios}
+                    descripcion={serviciosAdd}
+                    onChange={(e) => setServiciosAdd(e.target.value)}
+                    labelName = {'Servicio'}
+                    />  
                 <div className='tabla'>
 
                 <table className="table">
@@ -162,7 +203,11 @@ const AddProp = () => {
                         </>
                         ))}
                 </table>
+
                 </div>
+                <div className='tabla myTable'><GetAllServicio/> </div>
+
+                
             </div>
         </div>
     )
