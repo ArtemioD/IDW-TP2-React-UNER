@@ -28,7 +28,6 @@ function Images() {
             idAlojamiento: imagen.idAlojamiento,
             RutaArchivo: imagen.RutaArchivo
         }
-
         try {
             const response = await fetch("http://localhost:3001/imagen/createImagen", {
                 method: 'POST',
@@ -49,6 +48,7 @@ function Images() {
             console.log("ERROR: ", error)
         }
     }
+
     const getAllImagenes = async () => {
         try {
             const response = await fetch("http://localhost:3001/imagen/getAllImagenes", {
@@ -61,7 +61,7 @@ function Images() {
                 const data = await response.json()
                 setImagenes(data)
             } else {
-                console.error("ERROR: al obteber alojamientos", response.body)
+                console.error("ERROR: al obteber imagenes", response.body)
             }
         } catch (error) {
             console.log("ERROR: ", error)
@@ -77,8 +77,7 @@ function Images() {
                     'Content-type': 'application/json',
                 }
             })
-            console.log(response)
-
+            // console.log(response)
             if (response.ok) {
                 alert("eliminaste ok")
                 getAllImagenes()
@@ -91,9 +90,40 @@ function Images() {
         }
     }
 
-    console.log(imagenes);
+    const editar = async (e,idImagen) => {
+        e.preventDefault()
+        const jsonDatos = {
+            idAlojamiento: imagen.idAlojamiento,
+            RutaArchivo: imagen.RutaArchivo
+        }
+        console.log(jsonDatos);
+        try {
+            const response = await fetch(`http://localhost:3001/imagen/updateImagen/${idImagen}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(jsonDatos)
+            })
+            console.log(response)
+
+            if (response.ok) {
+                alert("Imagen editada")
+                getAllImagenes()
+            } else {
+                console.error("ERROR: al editar imagen")
+            }
+
+        } catch (error) {
+            console.log("ERROR: ", error)
+        }
+        e.target.reset()
+    }
+
+    // console.log(imagenes);
   return (
-    <div>Administracion de imagenes
+    <div className='d-flex flex-column '>
+        <h3 className='text-center mb-4'>Administrar de imagenes</h3>
         <form  className='d-flex g-1 AddTipoAdd'onSubmit={submit}>
                 <label htmlFor='RutaArchivo' className='fw-medium'>Nueva Imagen: </label>
                 <input
@@ -112,22 +142,35 @@ function Images() {
                     className='AddTipoInput'
                     placeholder='Ingrese el id'/>
                 <button className="btn-secondary AddTipoBtn" type='submit'>Agregar</button>
-            </form>
-            <div className='containerImage'>
+        </form>
+        <div className='containerImage'>
                 {
                     imagenes.map(imagen=>(
-                    <div className="card imageCard">
-                        <img src={imagen.RutaArchivo} className="card-img-top" alt="..."/>
-                        <div class="card-body">
-                            <p class="card-text d-inline p-3">Id Imagen: {imagen.idImagen}</p>
-                            <p class="card-text d-inline p-3">Id Alojamiento: {imagen.idAlojamiento}</p>
-                            <button className="btn-secondary AddTipoBtn " onClick={() => deleteImage(imagen.idImagen)}>Eliminar</button>
-                        </div>
+                <div className="card imageCard" key={imagen.idImagen}>
+                    <img src={imagen.RutaArchivo} className="card-img-top" alt="..."/>
+                    <div className="card-body">
+                        <p className="card-text d-inline p-3">Id Imagen: {imagen.idImagen}</p>
+                        <p className="card-text d-inline p-3">Id Alojamiento: {imagen.idAlojamiento}</p>
+                        <button className="btn-secondary AddTipoBtn " onClick={() => deleteImage(imagen.idImagen)}>Eliminar</button>
                     </div>
-                    ))
-                }
+                    <form  className='d-flex g-1 flex-column p-2'onSubmit={(e)=> editar(e,imagen.idImagen)}>
+                        <div className='d-block mb-2'>
+                        <label htmlFor='RutaArchivo' className='fw-medium'>Editar imagen: </label>
+                        <input
+                            type='text'
+                            id='RutaArchivo'
+                            name='RutaArchivo'
+                            onChange={handleInput}
+                            className='AddTipoInput'
+                            placeholder='Url de la imagen'/>
+                            <button className="btn-secondary AddTipoBtn">Editar</button>
+                        </div>
+                    </form>
+                </div>
+                ))
+            }
                 
-            </div>
+        </div>
     </div>
   )
 }
