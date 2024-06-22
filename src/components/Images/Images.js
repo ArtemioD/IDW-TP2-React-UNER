@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import "./Images.css"
 
 function Images() {
 
@@ -67,9 +68,32 @@ function Images() {
         }
     }
 
+    const deleteImage = async (id) => {
+        // console.log(id)
+        try {
+            const response = await fetch(`http://localhost:3001/imagen/deleteImagen/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            })
+            console.log(response)
+
+            if (response.ok) {
+                alert("eliminaste ok")
+                getAllImagenes()
+            } else {
+                console.error("ERROR: al eliminar imagen")
+            }
+
+        } catch (error) {
+            console.log("ERROR: ", error)
+        }
+    }
+
     console.log(imagenes);
   return (
-    <div>Administracionde imagenes
+    <div>Administracion de imagenes
         <form  className='d-flex g-1 AddTipoAdd'onSubmit={submit}>
                 <label htmlFor='RutaArchivo' className='fw-medium'>Nueva Imagen: </label>
                 <input
@@ -89,6 +113,21 @@ function Images() {
                     placeholder='Ingrese el id'/>
                 <button className="btn-secondary AddTipoBtn" type='submit'>Agregar</button>
             </form>
+            <div className='containerImage'>
+                {
+                    imagenes.map(imagen=>(
+                    <div className="card imageCard">
+                        <img src={imagen.RutaArchivo} className="card-img-top" alt="..."/>
+                        <div class="card-body">
+                            <p class="card-text d-inline p-3">Id Imagen: {imagen.idImagen}</p>
+                            <p class="card-text d-inline p-3">Id Alojamiento: {imagen.idAlojamiento}</p>
+                            <button className="btn-secondary AddTipoBtn " onClick={() => deleteImage(imagen.idImagen)}>Eliminar</button>
+                        </div>
+                    </div>
+                    ))
+                }
+                
+            </div>
     </div>
   )
 }
