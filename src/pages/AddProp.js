@@ -164,7 +164,7 @@ const AddProp = () => {
       console.log("ERROR: ", error);
     }
   };
-
+  
   return (
     <div className="containerAdmin ">
       <h1 className="AddPropTitulo">Administracion de Alojamientos</h1>

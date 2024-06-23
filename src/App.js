@@ -7,6 +7,7 @@ import About from "./pages/About.js";
 import Contacto from "./pages/Contacto.js";
 import AddProp from "./pages/AddProp.js"
 import AdminAloj from "./pages/AdminAloj.js"
+import Details from "./pages/Details.js";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/addpropiedad" element={<AddProp />} />
           <Route path="/adminaloj" element={<AdminAloj />} />
+          <Route path="/details" element={<Details/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>
