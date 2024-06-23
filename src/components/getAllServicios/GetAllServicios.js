@@ -1,8 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import "../../pages/AddProp.css"
+import { forwardRef, useImperativeHandle } from 'react'
 
-const GetAllServicio = () =>{
+const GetAllServicio = forwardRef((props, ref) =>{
+    useImperativeHandle(ref,() => ({
+        getServicios
+    }));
+    
     const [servicio, setServicio] = useState("")
     const [servicios, setServicios] = useState([])
 
@@ -124,6 +129,6 @@ const GetAllServicio = () =>{
                         ))}
                 </table>
     )
-}
+});
 
 export default GetAllServicio

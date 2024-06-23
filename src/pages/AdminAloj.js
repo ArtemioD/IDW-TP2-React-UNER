@@ -102,7 +102,7 @@ const AdminAloj = () => {
 
     return (
         <div className='containerAdmin '>
-            <button type='submit' className="btn-secondary AddTipoBtn" onClick={() => { setShowForm(!showForm) }}>Cargar nuevo Alojamiento</button>
+            <button type='submit' className=" boton-CargarAlojamiento AddTipoBtn" onClick={() => { setShowForm(!showForm) }}>Cargar nuevo Alojamiento</button>
             <GetAllAlojamientos ref={childRef} />
             <div>
                 {showForm && <form className='AdminAloj-form' onSubmit={submit} >
@@ -200,7 +200,7 @@ const AdminAloj = () => {
                             required />
                     </fieldset>
                     <p>Tipo de alojamiento</p>
-                    <select name="TipoAlojamiento" id="TipoAlojamiento" value={formData.TipoAlojamiento} onChange={handleChange} required>
+                    <select className='estilos-select' name="TipoAlojamiento" id="TipoAlojamiento" value={formData.TipoAlojamiento} onChange={handleChange} required>
                         <option value="" key="vacio">Seleccione una opción</option>
                         {alojamientos.map((aloj) => (
                             <option value={aloj.idTipoAlojamiento} key={aloj.Descripcion} >{aloj.Descripcion}</option>))}
