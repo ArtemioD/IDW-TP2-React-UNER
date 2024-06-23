@@ -20,7 +20,7 @@ function App() {
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/addpropiedad" element={<AddProp />} />
           <Route path="/adminaloj" element={<AdminAloj />} />
-          <Route path="/details" element={<Details/>} />
+          <Route path="/details/:id" element={<Details/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>
