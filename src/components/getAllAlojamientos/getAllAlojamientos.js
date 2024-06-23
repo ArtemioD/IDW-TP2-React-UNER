@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
+import React, { forwardRef, useImperativeHandle } from 'react';
 
 
-const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
+const GetAllAlojamientos = forwardRef((props, ref) => {
 
+    useImperativeHandle(ref, () => ({
+        getAlojamientos
+    }));
+
+    const [showForm, setShowForm] = useState(false);
     const [selectedAlojamiento, setSelectedAlojamiento] = useState('');
     const [alojamientos, setAlojamientos] = useState([])
     const [tipoAlojamientos, setTipoAlojamientos] = useState([])
@@ -25,8 +31,11 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
     }, []);
 
     useEffect(() => {
-        console.log(alojamientoEditar);
     }, [alojamientoEditar]);
+
+    useEffect(() => {
+    }, [alojamientos]);
+    
 
     const handleChange = (event) => {
         setAlojamiento({ ...alojamiento, [event.target.name]: event.target.value });
@@ -37,7 +46,15 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
         deleteAlojamiento(alojamiento.idAlojamiento);
     };
 
+    const handleChangeEdit = (e) => {
+        setAlojamientoEditar({
+            ...alojamientoEditar,
+            [e.target.name]: e.target.value
+        });
+    };
+
     const handleEdit = () => {
+        setShowForm(!showForm);
         const num = Number(alojamiento.idAlojamiento);
         let al = alojamientos.find(aloj => aloj.idAlojamiento === num)
         setAlojamientoEditar({ ...al })
@@ -109,6 +126,54 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
         }
     }
 
+    const editar = async (e, id) => {
+        e.preventDefault()
+        const jsonDatos = {
+            Titulo: alojamientoEditar.Titulo,
+            Descripcion: alojamientoEditar.Descripcion,
+            TipoAlojamiento: alojamientoEditar.TipoAlojamiento,
+            Latitud: alojamientoEditar.Latitud,
+            Longitud: alojamientoEditar.Longitud,
+            PrecioPorDia: alojamientoEditar.PrecioPorDia,
+            CantidadDormitorios: alojamientoEditar.CantidadDormitorios,
+            CantidadBanios: alojamientoEditar.CantidadBanios,
+            Estado: alojamientoEditar.Estado
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3001/alojamiento/putAlojamiento/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(jsonDatos)
+            })
+
+            if (response.ok) {
+                alert("editaste ok")
+                setAlojamientoEditar({
+                    Titulo: '',
+                    Descripcion: '',
+                    TipoAlojamiento: '',
+                    Latitud: '',
+                    Longitud: '',
+                    PrecioPorDia: '',
+                    CantidadDormitorios: '',
+                    CantidadBanios: '',
+                    Estado: ''
+                });
+                getAlojamientos()
+                setShowForm(false);
+            } else {
+                console.error("ERROR: al editar alojamiento")
+            }
+
+        } catch (error) {
+            console.log("ERROR: ", error)
+        }
+        e.target.reset()
+    }
+
     return (
         <div>
             <select
@@ -120,7 +185,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
             >
                 <option value="" key="vacio">Seleccione una opción</option>
                 {alojamientos.map((aloj) => (
-                    <option value={aloj.idAlojamiento} key={aloj.idAlojamiento}>
+                    <option value={ aloj.idAlojamiento } key={aloj.idAlojamiento}>
                         {aloj.Titulo}
                     </option>
                 ))}
@@ -140,14 +205,14 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                 disabled={!selectedAlojamiento}
             >Eliminar</button>
 
-            <div>
-                <form className='AdminAloj-form'  >
+            {showForm && <div>
+                <form className='AdminAloj-form' onSubmit={(e) => editar(e, alojamiento.idAlojamiento)} >
                     <label htmlFor='Titulo'>Titulo</label>
                     <input
                         key="Titulo"
                         name="Titulo"
                         type="text"
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         value={alojamientoEditar.Titulo}
                         required />
 
@@ -158,7 +223,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                         name="Descripcion"
                         type="text"
                         value={alojamientoEditar.Descripcion}
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         placeholder='Descripcion'
                         required />
 
@@ -169,7 +234,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                         id="Latitud"
                         name="Latitud"
                         value={alojamientoEditar.Latitud}
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         type="number"
                         placeholder='Latitud'
                         required />
@@ -179,7 +244,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                         id="Longitud"
                         name="Longitud"
                         value={alojamientoEditar.Longitud}
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         type="number"
                         placeholder='Longitud'
                         required />
@@ -190,7 +255,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                         name="PrecioPorDia"
                         type="number"
                         value={alojamientoEditar.PrecioPorDia}
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         placeholder='PrecioPorDia'
                         required />
                     <label htmlFor='CantidadDormitorios'>Cantidad de dormitorios</label>
@@ -200,7 +265,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                         name="CantidadDormitorios"
                         type="number"
                         value={alojamientoEditar.CantidadDormitorios}
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         placeholder='CantidadDormitorios'
                         required />
                     <label htmlFor='CantidadBanios'>Cantidad de baños</label>
@@ -210,7 +275,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                         name="CantidadBanios"
                         type="number"
                         value={alojamientoEditar.CantidadBanios}
-                        onChange={ald => ald}
+                        onChange={handleChangeEdit}
                         placeholder='CantidadBanios'
                         required />
 
@@ -224,7 +289,7 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                             type="radio"
                             value="Disponible"
                             checked={alojamientoEditar.Estado === 'Disponible'}
-                            onChange={ald => ald}
+                            onChange={handleChangeEdit}
                             required />
                         <label htmlFor='Reservado'>Reservado</label>
                         <input
@@ -234,25 +299,23 @@ const GetAllAlojamientos = ({ getIdEdiTAlojamiento}) => {
                             type="radio"
                             value="Reservado"
                             checked={alojamientoEditar.Estado === 'Reservado'}
-                            onChange={ald => ald}
+                            onChange={handleChangeEdit}
                             required />
                     </fieldset>
                     <p>Tipo de alojamiento</p>
 
-                    <select name="TipoAlojamiento" id="TipoAlojamiento" value={alojamientoEditar.TipoAlojamiento} onChange={ald => ald} required>
-                        <option value="" key="vacio">Seleccione una opción</option>
+                    <select name="TipoAlojamiento" id="TipoAlojamiento" value={alojamientoEditar.TipoAlojamiento !== null ? alojamientoEditar.TipoAlojamiento : ""} onChange={handleChangeEdit} required>
                         {tipoAlojamientos.map((aloj) => (
                             <option value={aloj.idTipoAlojamiento} key={aloj.Descripcion} >{aloj.Descripcion}</option>))}
                     </select>
-                    
-
                     <button type='submit'>Editar</button>
                 </form>
-            </div>
+            </div>}
+
         </div>
     )
 
-}
+});
 
 export default GetAllAlojamientos
 

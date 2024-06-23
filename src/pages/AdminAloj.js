@@ -1,11 +1,12 @@
 import React from 'react'
 import "../pages/AdminAloj.css";
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import GetAllAlojamientos from '../components/getAllAlojamientos/getAllAlojamientos';
 
 const AdminAloj = () => {
 
-    const [idEdiTAlojamiento, setIdEdiTAlojamiento] = useState('');
+    const [showForm, setShowForm] = useState(false);
+    const childRef = useRef();
     const [alojamientos, setAlojamientos] = useState([])
     const [formData, setFormData] = useState({
         Titulo: '',
@@ -20,15 +21,9 @@ const AdminAloj = () => {
         Estado: ''
     });
 
-    const getIdEdiTAlojamiento = (value) => {
-        setIdEdiTAlojamiento(value);
-        console.log(value) // id elegido para editar
-    };
-
     useEffect(() => {
         getTiposAlojamiento();
     }, []);
-    // console.log(alojamientos);
 
     const getTiposAlojamiento = async () => {
         try {
@@ -81,7 +76,6 @@ const AdminAloj = () => {
 
             if (response.ok) {
                 alert("OK: Se creó alojamiento nuevo!");
-                // Reset form or update state if needed
                 setFormData({
                     Titulo: '',
                     Descripcion: '',
@@ -93,7 +87,8 @@ const AdminAloj = () => {
                     CantidadBanios: '',
                     Estado: ''
                 });
-                // Assuming getTiposAlojamiento is a function you want to call
+                childRef.current.getAlojamientos()
+                setShowForm(false)
                 //getTiposAlojamiento();
             } else {
                 const errorData = await response.json();
@@ -107,9 +102,10 @@ const AdminAloj = () => {
 
     return (
         <div className='containerAdmin '>
-            {idEdiTAlojamiento}
+            <button type='submit' className="btn-secondary AddTipoBtn" onClick={() => { setShowForm(!showForm) }}>Cargar nuevo Alojamiento</button>
+            <GetAllAlojamientos ref={childRef} />
             <div>
-                <form className='AdminAloj-form' onSubmit={submit} >
+                {showForm && <form className='AdminAloj-form' onSubmit={submit} >
                     <label htmlFor='Titulo'>Titulo</label>
                     <input
                         key="Titulo"
@@ -209,11 +205,10 @@ const AdminAloj = () => {
                         {alojamientos.map((aloj) => (
                             <option value={aloj.idTipoAlojamiento} key={aloj.Descripcion} >{aloj.Descripcion}</option>))}
                     </select>
-                    <button type='submit'>Cargar nuevo</button>
-                </form>
+                    <button type='submit'>Agregar</button>
+                </form>}
+                
             </div>
-
-            <GetAllAlojamientos getIdEdiTAlojamiento={getIdEdiTAlojamiento} alojamientos={alojamientos} />
         </div>
     )
 }
