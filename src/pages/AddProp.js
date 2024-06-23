@@ -5,6 +5,7 @@ import "../pages/AddProp.css";
 import GetAllServicio from '../components/getAllServicios/GetAllServicios';
 import Images from '../components/Images/Images';
 import AlojamientoServicios from '../components/AlojamientoServicios/AlojamientoServicios';
+import { Link } from 'react-router-dom';
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
@@ -153,6 +154,12 @@ const AddProp = () => {
         <div className='containerAdmin '>
             <h1 className='AddPropTitulo'>Administracion de alojamientos</h1>
             <div className='AddPropBox'>
+                <div className='AddPropNew'>
+                    <p className='fw-medium ' >Agregar Alojamiento nuevo</p>
+                    <Link to='/adminaloj'>
+                    <button className="btn-secondary AddTipoBtn">Agregar</button>
+                    </Link>
+                </div>
                 <AddTipoAlojamiento
                     placeholder={'Ingrese tipo alojamineto'}
                     submit={submit}
