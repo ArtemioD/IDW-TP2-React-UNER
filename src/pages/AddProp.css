@@ -67,6 +67,36 @@
 .myTable{
     margin-bottom: 30px;
 }
+
+
+.containerAdmin2{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Estilos del boton */
+.boton-AddAlojamiento {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 150px;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 40px;
+  }
+  
+  .boton-AddAlojamiento:hover {
+    background-color: #4687b8;
+    color: rgb(255, 255, 255);
+  }
+  
 .AddPropNew{
     display: flex;
     justify-content: center;

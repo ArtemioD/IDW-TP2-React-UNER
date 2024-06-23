@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import React, { forwardRef, useImperativeHandle } from 'react';
+import '../getAllAlojamientos/getAllAlojamientos.css'
 
 
 const GetAllAlojamientos = forwardRef((props, ref) => {
@@ -177,6 +178,7 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
     return (
         <div>
             <select
+                className='estilos-select'
                 name="idAlojamiento"
                 id="idAlojamiento"
                 value={alojamiento.idAlojamiento}
@@ -190,21 +192,21 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
                     </option>
                 ))}
             </select>
-
+            <div className='estilosBotones'>
             <button
                 type="button"
                 onClick={handleEdit}
-                className="btn-secondary AddTipoBtn"
+                className="AddTipoBtn boton-ElegirEditar"
                 disabled={!selectedAlojamiento}
             >Eligir para editar</button>
 
             <button
                 type="button"
                 onClick={handleDelete}
-                className="btn-secondary AddTipoBtn"
+                className="boton-ElegirEditar AddTipoBtn"
                 disabled={!selectedAlojamiento}
             >Eliminar</button>
-
+            </div>
             {showForm && <div>
                 <form className='AdminAloj-form' onSubmit={(e) => editar(e, alojamiento.idAlojamiento)} >
                     <label htmlFor='Titulo'>Titulo</label>
@@ -304,7 +306,7 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
                     </fieldset>
                     <p>Tipo de alojamiento</p>
 
-                    <select name="TipoAlojamiento" id="TipoAlojamiento" value={alojamientoEditar.TipoAlojamiento !== null ? alojamientoEditar.TipoAlojamiento : ""} onChange={handleChangeEdit} required>
+                    <select className='estilos-select' name="TipoAlojamiento" id="TipoAlojamiento" value={alojamientoEditar.TipoAlojamiento !== null ? alojamientoEditar.TipoAlojamiento : ""} onChange={handleChangeEdit} required>
                         {tipoAlojamientos.map((aloj) => (
                             <option value={aloj.idTipoAlojamiento} key={aloj.Descripcion} >{aloj.Descripcion}</option>))}
                     </select>
