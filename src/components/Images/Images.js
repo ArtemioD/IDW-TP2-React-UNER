@@ -40,6 +40,7 @@ function Images() {
             if (response.ok) {
                 alert("OK: Se Creo imagen nueva!", response)
                 getAllImagenes()
+                e.target.reset()
             } else {
                 console.error("ERROR: al crear imagen")
                 alert("Error: Pruebe mañana")

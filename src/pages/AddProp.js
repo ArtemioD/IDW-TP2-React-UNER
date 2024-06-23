@@ -4,6 +4,7 @@ import AddTipoAlojamiento from '../components/addTipoAlojamiento/AddTipoAlojamie
 import "../pages/AddProp.css";
 import GetAllServicio from '../components/getAllServicios/GetAllServicios';
 import Images from '../components/Images/Images';
+import AlojamientoServicios from '../components/AlojamientoServicios/AlojamientoServicios';
 
 const AddProp = () => {
     const [descripcion, setDescripcion] = useState("")
@@ -210,6 +211,7 @@ const AddProp = () => {
 
                 
             </div>
+            <AlojamientoServicios/>
             <Images />
         </div>
     )
