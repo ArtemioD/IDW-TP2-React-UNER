@@ -1,0 +1,34 @@
+.DelailsImg{
+    /* width: 70%; */
+    border-radius: 8px;
+}
+.DetailsTitulo1{
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 1rem;
+}
+.cardDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.DetailsDatos{
+    /* background-color: aqua; */
+    width: 80%;
+    margin-top: 2rem;
+}
+.DetailsEstado{
+    font-weight: bolder;
+}
+.DetailsTitulo{
+    font-weight: bolder;
+    font-size: 25px;
+}
+.DetailsDescripcion{
+    font-style: italic;
+    color: #111111b2;
+    font-size: 22px;
+}
