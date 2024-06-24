@@ -70,7 +70,7 @@ function Images() {
     }
 
     const deleteImage = async (id) => {
-        // console.log(id)
+        
         try {
             const response = await fetch(`http://localhost:3001/imagen/deleteImagen/${id}`, {
                 method: 'DELETE',
@@ -78,7 +78,7 @@ function Images() {
                     'Content-type': 'application/json',
                 }
             })
-            // console.log(response)
+            
             if (response.ok) {
                 alert("eliminaste ok")
                 getAllImagenes()
