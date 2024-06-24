@@ -15,8 +15,7 @@ function Details() {
     getAlojamientoServicio(id);
   }, [id]);
   // console.log(id);
-  // console.log(alojamiento);
-  // console.log(imagen);
+  console.log(alojamiento);
   console.log(alojamientoServicio);
 
   const getAllImagenes = async (id) => {
@@ -85,8 +84,7 @@ function Details() {
     }
   };
 
-  
-
+  console.log(imagen);
   return (
     <div className="">
       <h1 className="DetailsTitulo1">{alojamiento.Titulo}</h1>
@@ -98,7 +96,7 @@ function Details() {
         >
           <div className="carousel-inner">
             {imagen.map((imag) => (
-              <div className="carousel-item active" key={imag.idImagen}>
+              <div className="carousel-item active" key={imag.RutaArchivo}>
                 <img
                   src={imag.RutaArchivo}
                   className="d-block w-100 DelailsImg"
