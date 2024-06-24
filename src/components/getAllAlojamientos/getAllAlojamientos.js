@@ -198,7 +198,7 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
                 onClick={handleEdit}
                 className="AddTipoBtn boton-ElegirEditar"
                 disabled={!selectedAlojamiento}
-            >Eligir para editar</button>
+            > {showForm ? "Calcelar" : "Editar"}</button>
 
             <button
                 type="button"
