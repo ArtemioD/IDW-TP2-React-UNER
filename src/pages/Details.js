@@ -10,18 +10,17 @@ function Details() {
   const [alojamientoServicio, setAlojamientoServicio] = useState([]);
 
   useEffect(() => {
-    getAllImagenes(id);
+    getAllImagenes();
     getAlojamiento(id);
     getAlojamientoServicio(id);
   }, [id]);
-  // console.log(id);
-  console.log(alojamiento);
-  console.log(alojamientoServicio);
 
-  const getAllImagenes = async (id) => {
+  const imagenesFiltradas = imagen.filter(imag => imag.idAlojamiento ==id)
+
+  const getAllImagenes = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/imagen/getAllImagenes?idAlojamiento=${id}`,
+        `http://localhost:3001/imagen/getAllImagenes`,
         {
           method: "GET",
           headers: {
@@ -84,7 +83,7 @@ function Details() {
     }
   };
 
-  console.log(imagen);
+  
   return (
     <div className="">
       <h1 className="DetailsTitulo1">{alojamiento.Titulo}</h1>
@@ -95,7 +94,7 @@ function Details() {
           data-bs-ride="carousel"
         >
           <div className="carousel-inner">
-            {imagen.map((imag) => (
+            {imagenesFiltradas.map((imag) => (
               <div className="carousel-item active" key={imag.RutaArchivo}>
                 <img
                   src={imag.RutaArchivo}
@@ -107,7 +106,6 @@ function Details() {
           </div>
         </div>
         <div className="DetailsDatos">
-          {/* <p className="DetailsTitulo">{alojamiento.Titulo}</p> */}
           <p className="DetailsDescripcion">{alojamiento.Descripcion}</p>
           <p>
             Ubicacion: {alojamiento.Latitud} - {" "}
