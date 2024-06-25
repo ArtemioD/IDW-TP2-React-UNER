@@ -8,11 +8,13 @@ function Details() {
   const [imagen, setImagen] = useState([]);
   const [alojamiento, setAlojamiento] = useState([]);
   const [alojamientoServicio, setAlojamientoServicio] = useState([]);
+  const [servicios, setServicios] = useState([])
 
   useEffect(() => {
     getAllImagenes();
     getAlojamiento(id);
     getAlojamientoServicio(id);
+    getServicios()
   }, [id]);
 
   const imagenesFiltradas = imagen.filter(imag => imag.idAlojamiento ==id)
@@ -83,6 +85,31 @@ function Details() {
     }
   };
 
+  const getServicios = async () => {
+    try {
+        const response = await fetch("http://localhost:3001/servicio/getAllServicios", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+
+        if (response.ok) {
+            const data = await response.json()
+            setServicios(data)
+        } else {
+            console.error("ERROR: al obteber alojamientos", response.body)
+        }
+
+    } catch (error) {
+        console.log("ERROR: ", error)
+    }
+}
+
+const aloj =[]
+alojamientoServicio.filter(imag => aloj.push(imag.idServicio))
+
+const serviciosFiltrados = servicios.filter(servicios => aloj.includes(servicios.idServicio))
   
   return (
     <div className="">
@@ -114,6 +141,17 @@ function Details() {
           <p>Precio por dia: ${alojamiento.PrecioPorDia}</p>
           <p>Cant. Dormitorios: {alojamiento.CantidadDormitorios}</p>
           <p>Cant. baños: {alojamiento.CantidadBanios}</p>
+          <div className="d-flex"><p>
+            Servicios:
+          </p>
+          <div className="d-flex ms-2">
+            {
+              serviciosFiltrados.map((serv)=>(
+                <p className="ms-2" key={serv.idServicio}>{serv.Nombre} / </p>
+              ))
+            }
+            </div>
+          </div>
           <p className="DetailsEstado">{alojamiento.Estado}</p>
         </div>
       </div>
