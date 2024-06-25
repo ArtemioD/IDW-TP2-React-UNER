@@ -2,13 +2,14 @@ import Cards from "../components/cards/Cards"
 import titulo from "../img/titulo.png";
 import "./Home.css"
 
-const Home = () => {
+const Home = ({ valor }) => {
+
     return (
         <div className="contenedor">
             <div className="titulo">
                 <img src={titulo} alt="Titulo" />
             </div>
-            <Cards/>
+            <Cards valorBuscado={valor}/>
         </div>
         
     )

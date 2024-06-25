@@ -118,6 +118,7 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
             if (response.ok) {
                 alert("eliminaste ok")
                 getAlojamientos()
+                setShowForm(false);
             } else {
                 console.error("ERROR: al eliminar alojamiento")
             }
@@ -152,7 +153,7 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
 
             if (response.ok) {
                 alert("editaste ok")
-                setAlojamientoEditar({
+                setSelectedAlojamiento({
                     Titulo: '',
                     Descripcion: '',
                     TipoAlojamiento: '',

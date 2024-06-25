@@ -1,8 +1,8 @@
 import search from "../../img/ic_search.png"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Search.css"
 
-const Search = () => {
+const Search = ({ onSearch }) => {
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (event) => {
@@ -11,7 +11,7 @@ const Search = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(inputValue);
+        onSearch(inputValue)
     }
 
     return (
