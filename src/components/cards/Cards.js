@@ -8,6 +8,7 @@ function Cards({ valorBuscado }) {
 
     const [hoteles, setHoteles] = useState([])
     const [imagenes, setImagenes] = useState([])
+    // const [filtro, setFiltro] = useState([])
 
     useEffect(() => {
         getAlojamientos()
@@ -56,7 +57,14 @@ function Cards({ valorBuscado }) {
     console.log(imagenes);
 
     const alojamientoEncontrado = hoteles.find(aloj => aloj.Titulo.toLowerCase() === valorBuscado.toLowerCase());
+    
+    // const imagenesFiltradasla = []
 
+    // function imagenesFiltradasla(id) {
+    //     imagenes.filter(imag => imag.idAlojamiento == id)
+    //     setFiltro(imagenes)
+    // }
+    
     return (
         <div className="containers">
             {valorBuscado === "" ? (
@@ -67,8 +75,8 @@ function Cards({ valorBuscado }) {
                                 <div className="carousel-inner">
 
                                     {
-
-                                        imagenes.map((imag) => (
+                                        imagenes.filter(imag => imag.idAlojamiento == alojamiento.idAlojamiento)
+                                        .map((imag) => (
                                             <div className="carousel-item active imgCard">
                                                 <img src={imag.RutaArchivo} className="d-block w-100 borderImg" alt={imag.idImagen} />
                                             </div>
