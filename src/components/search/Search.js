@@ -5,8 +5,12 @@ import "./Search.css"
 const Search = ({ onSearch }) => {
     const [inputValue, setInputValue] = useState('');
 
+    useEffect(() => {
+        onSearch(inputValue)
+    }, [inputValue]);
+
     const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+        setInputValue(event.target.value);  
     }
 
     const handleSubmit = (event) => {
@@ -15,10 +19,10 @@ const Search = ({ onSearch }) => {
     }
 
     return (
-        <form className="search-box" onSubmit={handleSubmit}>
+        <div className="search-box">
             <input type="text" placeholder="Explorar destinos" onChange={handleInputChange} />
-            <button tipe="submit"><img src={search} alt=""/></button>
-        </form>
+            <button><img src={search} alt="" /></button>
+        </div>
     )
 }
 
