@@ -70,7 +70,7 @@ function AlojamientoServicios() {
     console.log(alojamientoS);
 
     const deleteAlojServ = async (id) => {
-        // console.log(id)
+        
         try {
             const response = await fetch(`http://localhost:3001/alojamientosServicios/deleteAlojamientoServicio/${id}`, {
                 method: 'DELETE',
@@ -78,7 +78,7 @@ function AlojamientoServicios() {
                     'Content-type': 'application/json',
                 }
             })
-            // console.log(response)
+            
             if (response.ok) {
                 alert("eliminaste Alojamiento/Servicio")
                 getAllAlojamientoS()
