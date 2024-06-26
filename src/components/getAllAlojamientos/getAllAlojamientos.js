@@ -60,8 +60,6 @@ const GetAllAlojamientos = forwardRef((props, ref) => {
         let al = alojamientos.find(aloj => aloj.idAlojamiento === num)
         setAlojamientoEditar({ ...al })
         getTiposAlojamiento();
-        //getIdEdiTAlojamiento(alojamiento.idAlojamiento);
-        //editar(alojamiento.idAlojamiento)
     };
 
     const getTiposAlojamiento = async () => {

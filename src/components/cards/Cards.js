@@ -7,7 +7,7 @@ const Cards = ({ valorBuscado }) => {
     
     const [hoteles, setHoteles] = useState([]);
     const [imagenes, setImagenes] = useState([]);
-    // const [filtro, setFiltro] = useState([])
+    
 
     useEffect(() => {
         getAlojamientos();
@@ -57,12 +57,6 @@ const Cards = ({ valorBuscado }) => {
 
     const filteredAlojamientos = hoteles.filter(aloj => aloj.Titulo.toLowerCase().startsWith(valorBuscado.toLowerCase()));
 
-    // const imagenesFiltradasla = []
-
-    // function imagenesFiltradasla(id) {
-    //     imagenes.filter(imag => imag.idAlojamiento == id)
-    //     setFiltro(imagenes)
-    // }
 
     return (
         <div className="containers">
