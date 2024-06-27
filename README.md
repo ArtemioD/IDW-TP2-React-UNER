@@ -13,7 +13,7 @@
 * Javascript
 * React
 * Mysql
-* 
+  
 # Descripcion
 
 Sitio web de alojamientos con buscador en la pagina principal y link hacia los detalles de cada alojamiento. Paginas About con datos de la agencia y Contacto con formulario de contacto y ubicacion.
