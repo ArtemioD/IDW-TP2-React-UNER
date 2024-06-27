@@ -1,0 +1,70 @@
+.containerAdmin{
+    min-height:  72vh ;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.AdminAloj-form{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(138, 74, 242);
+
+    gap: 15px; /* Espacio entre los elementos */
+    width: 450px; /* Ancho máximo del formulario */
+    margin: 0 auto; 
+    padding: 20px;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    background-color: #f9f9f9; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.AdminAloj-form label {
+    font-weight: bold; 
+}
+
+.AdminAloj-form button:hover {
+    background-color: #4687b8; 
+    color: white;
+    border-radius: 4px;
+    
+    
+  }
+  
+.AdminAloj-form p {
+    font-weight: bold; /* Texto en negrita para el párrafo */
+    margin-bottom: 5px; /* Espacio debajo del párrafo */
+  }
+  
+.AdminAloj-form label {
+    font-weight: bold; /* Texto en negrita para los labels */
+    margin-bottom: 5px; /* Espacio debajo del label */
+  }
+
+
+
+.boton-CargarAlojamiento {
+    background-color: #6c757d;
+    color: white;
+    padding: 22px 150px;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    margin-top: 20px;
+  }
+  
+  .boton-CargarAlojamiento:hover {
+    background-color: #4687b8;
+    color: rgb(255, 255, 255);
+  }

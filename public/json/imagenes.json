@@ -1,0 +1,98 @@
+[
+    {
+        "idAlojamiento": 5,
+        "RutaArchivo":"../json/img/bicen1.jpg"
+},
+    {
+        "idAlojamiento": 5,
+        "RutaArchivo":"../json/img/bicen2.jpg"
+},
+    {
+        "idAlojamiento": 5,
+        "RutaArchivo":"../json/img/bicen3.jpg"
+},
+    {
+        "idAlojamiento": 6,
+        "RutaArchivo":"../json/img/vic1.jpg"
+},
+    {
+        "idAlojamiento": 6,
+        "RutaArchivo":"../json/img/vic2.jpg"
+},
+    {
+        "idAlojamiento": 6,
+        "RutaArchivo":"../json/img/vic3.jpg"
+},
+    {
+        "idAlojamiento": 7,
+        "RutaArchivo":"../json/img/sanm1.jpg"
+},
+    {
+        "idAlojamiento": 7,
+        "RutaArchivo":"../json/img/sanm2.jpg"
+},
+    {
+        "idAlojamiento": 7,
+        "RutaArchivo":"../json/img/sanm3.jpg"
+},
+    {
+        "idAlojamiento": 8,
+        "RutaArchivo":"../json/img/sal1.jpg"
+},
+    {
+        "idAlojamiento": 8,
+        "RutaArchivo":"../json/img/sal2.jpg"
+},
+    {
+        "idAlojamiento": 8,
+        "RutaArchivo":"../json/img/sal3.jpg"
+},
+    {
+        "idAlojamiento": 9,
+        "RutaArchivo":"../json/img/juj1.jpg"
+},
+    {
+        "idAlojamiento": 9,
+        "RutaArchivo":"../json/img/juj2.jpg"
+},
+    {
+        "idAlojamiento": 9,
+        "RutaArchivo":"../json/img/juj3.jpg"
+},
+    {
+        "idAlojamiento": 10,
+        "RutaArchivo":"../json/img/ush1.jpg"
+},
+    {
+        "idAlojamiento": 10,
+        "RutaArchivo":"../json/img/ush2.jpg"
+},
+    {
+        "idAlojamiento": 10,
+        "RutaArchivo":"../json/img/ush3.jpg"
+},
+    {
+        "idAlojamiento": 11,
+        "RutaArchivo":"../json/img/bar1.jpg"
+},
+    {
+        "idAlojamiento": 11,
+        "RutaArchivo":"../json/img/bar2.jpg"
+},
+    {
+        "idAlojamiento": 11,
+        "RutaArchivo":"../json/img/bar3.jpg"
+},
+    {
+        "idAlojamiento": 12,
+        "RutaArchivo":"../json/img/mar1.jpg"
+},
+    {
+        "idAlojamiento": 12,
+        "RutaArchivo":"../json/img/mar2.jpg"
+},
+    {
+        "idAlojamiento": 12,
+        "RutaArchivo":"../json/img/mar3.jpg"
+}
+]

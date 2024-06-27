@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
+import React, { useState } from 'react';
 import "./NavBar.css"
 import logo from "../../img/icono_web.png"
 import Search from "../search/Search"
@@ -10,16 +11,20 @@ const links = [
     { name: "Admin", href: "/addpropiedad", style: "btn-menu btn-menu-admin" }
 ]
 
-const NavBar = () => {
+const NavBar = ({ onSearch }) => {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
+
+    const handleSearch = (term) => {
+        onSearch(term)
+    };
 
     return (
         <div className="header-container">
             <Link to="/"><img src={logo} className="logo" /></Link>
 
-            <div style={{width: '20%'}}>
-                {isHomePage && <Search />}
+            <div style={{ width: '20%' }}>
+                {isHomePage && <Search onSearch={handleSearch} />}
             </div>
 
             <nav className="menu-container" >

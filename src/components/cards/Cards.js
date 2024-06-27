@@ -1,51 +1,89 @@
 import { useEffect, useState } from 'react'
 import "./Cards.css"
+import { Link as LinkRouter } from 'react-router-dom'
 
 
-function Cards() {
+const Cards = ({ valorBuscado }) => {
+    
+    const [hoteles, setHoteles] = useState([]);
+    const [imagenes, setImagenes] = useState([]);
+    
 
-        const [hoteles, setHoteles] = useState([])
-    
-        useEffect(()=>{
-            fetch("json/alojamientos.json")
-            .then(response => response.json())
-            .then(datos => {
-                setHoteles(datos)
-            })
-        },[])
-        
-    
-    
-  return (
-    <div className="containers">
-        {
-            hoteles.map((alojamiento=>(
-                <div className="cards" key={alojamiento.id}>
-                    <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel" data-bs-interval="9000">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active imgCard">
-                                <img src={alojamiento.imagen1} className="d-block w-100 borderImg" alt={alojamiento.nombre_hotel}/>
-                            </div>
-                            <div className="carousel-item imgCard">
-                                <img src={alojamiento.imagen2}  className="d-block w-100 borderImg" alt={alojamiento.nombre_hotel}/>
-                            </div>
-                            <div className="carousel-item imgCard">
-                                <img src={alojamiento.imagen3}  className="d-block w-100 borderImg" alt={alojamiento.nombre_hotel}/>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="" className="text-decoration-none text-dark textCard">
-                        <h3 className="h3Card">{alojamiento.nombre_hotel}</h3>
-                        <p className="p1Card">{alojamiento.descripcion}</p>
-                        <p className="p2Card">{alojamiento.precio}</p>
-                    </a>
-                </div>
-            )
-            ))
+    useEffect(() => {
+        getAlojamientos();
+        getImagenes();
+    }, []);
+
+    const getAlojamientos = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/alojamiento/getAlojamientos", {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setHoteles(data);
+            } else {
+                console.error("ERROR: al obtener alojamientos", response.body);
+            }
+        } catch (error) {
+            console.log("ERROR: ", error);
         }
-        
-    </div>
-  )
-}
+    };
+
+    const getImagenes = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/imagen/getAllImagenes", {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setImagenes(data);
+            } else {
+                console.error("ERROR: al obtener imágenes", response.body);
+            }
+        } catch (error) {
+            console.log("ERROR: ", error);
+        }
+    };
+
+    console.log(hoteles);
+    console.log(imagenes);
+
+    const filteredAlojamientos = hoteles.filter(aloj => aloj.Titulo.toLowerCase().startsWith(valorBuscado.toLowerCase()));
+
+
+    return (
+        <div className="containers">
+            {filteredAlojamientos.length === 0 && valorBuscado !== "" ? (
+                <div>No se encontraron alojamientos con el título "{valorBuscado}"</div>
+            ) : (
+                filteredAlojamientos.map((alojamiento) => (
+                    <div className="cards" key={alojamiento.id}>
+                        <LinkRouter to={`/details/${alojamiento.idAlojamiento}`} className="text-decoration-none text-dark textCard">
+                            <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel" data-bs-interval="9000">
+                                <div className="carousel-inner">
+                                    {imagenes.filter(imag => imag.idAlojamiento === alojamiento.idAlojamiento).map((imag, index) => (
+                                        <div key={imag.idImagen} className={`carousel-item ${index === 0 ? 'active' : ''} imgCard`}>
+                                            <img src={imag.RutaArchivo} className="d-block w-100 borderImg" alt={imag.idImagen} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <h3 className="h3Card">{alojamiento.Titulo}</h3>
+                            <p className="p1Card">{alojamiento.Descripcion}</p>
+                            <p className="p2Card">{alojamiento.PrecioPorDia}</p>
+                        </LinkRouter>
+                    </div>
+                ))
+            )}
+        </div>
+    );
+};
 
 export default Cards
